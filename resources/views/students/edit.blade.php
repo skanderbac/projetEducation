@@ -23,6 +23,18 @@
             <label >Prenom</label>
             <input type="text" class="form-control"  placeholder="Prenom" name="prenom" value="{{$student->prenom}}">
         </div>
+        <div class="form-group">
+            <label >Bac</label>
+            <select class="form-control"  name="bac_id">
+                @foreach($bac as $b)
+                    @if($b->id == $student->bac_id)
+                        <option value="{{$b->id}}" selected>{{$b->nom}}</option>
+                    @else
+                        <option value="{{$b->id}}" >{{$b->nom}}</option>
+                    @endif
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary">Modifier</button>
     </form>
     <a href="{{route('students')}}">Voir la liste des étudiants</a>

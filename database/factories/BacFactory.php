@@ -2,18 +2,18 @@
 
 namespace Database\Factories;
 
+use App\Models\Bac;
 use App\Models\Model;
-use App\Models\Student;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class StudentFactory extends Factory
+class BacFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Student::class;
+    protected $model = Bac::class;
 
     /**
      * Define the model's default state.
@@ -23,9 +23,7 @@ class StudentFactory extends Factory
     public function definition()
     {
         return [
-            'nom' => $this->faker->lastName(),
-            'prenom' => $this->faker->firstName(),
-            'bac_id' => rand(1,7),
+            //
         ];
     }
 }

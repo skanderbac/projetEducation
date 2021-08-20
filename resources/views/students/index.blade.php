@@ -10,7 +10,8 @@
         <tr>
             <th>#</th>
             <th>Nom</th>
-            <th>prenom</th>
+            <th>Prenom</th>
+            <th>Bac</th>
         </tr>
         <tbody>
         @foreach($students as $student)
@@ -18,6 +19,7 @@
                 <td>{{$loop->index+1}}</td>
                 <td>{{$student->nom}}</td>
                 <td>{{$student->prenom}}</td>
+                <td>{{$student->bac->nom}}</td>
                 <td><a href="{{route('students.edit',['student'=>$student->id])}}" class="btn btn-info">Modifier</a></td>
                 <td><a href="#" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cet etudiant ?')){document.getElementById('form-{{$student->id}}').submit()}">Supprimer</a></td>
                     <form id="form-{{$student->id}}" method="post" action="{{route('students.delete',['student'=>$student->id])}}">

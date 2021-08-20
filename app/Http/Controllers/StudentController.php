@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bac;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -17,18 +18,21 @@ class StudentController extends Controller
 
     public function create()
     {
-        return view('students.create');
+        $bac =  Bac::all();
+        return view('students.create',compact('bac'));
     }
 
 
     public function store(Request $request)
     {
         $request->validate([
-           "nom"=>"required",
-           "prenom"=>"required"
+            "nom"=>"required",
+            "prenom"=>"required",
+            "bac_id"=>"required",
         ]);
         Student::create($request->all());
-        return back()->with("success","Etudiant ajouté");
+        //return back()->with("success","Etudiant ajouté");
+        return redirect('/students')->with("success","Etudiant ajouté");
     }
 
     /**
@@ -44,7 +48,8 @@ class StudentController extends Controller
 
     public function edit(Student $student)
     {
-        return view('students.edit',compact('student'));
+        $bac =  Bac::all();
+        return view('students.edit',compact('student','bac'));
     }
 
 
@@ -52,13 +57,16 @@ class StudentController extends Controller
     {
         $request->validate([
             "nom"=>"required",
-            "prenom"=>"required"
+            "prenom"=>"required",
+            "bac_id"=>"required",
         ]);
         $student->update([
             "nom" => $request->nom,
-            "prenom" => $request->prenom
+            "prenom" => $request->prenom,
+            "bac_id" => $request->bac_id,
         ]);
-        return back()->with("success","Etudiant modifié");
+        //return back()->with("success","Etudiant modifié");
+        return redirect('/students')->with("success","Etudiant modifié");
     }
 
 

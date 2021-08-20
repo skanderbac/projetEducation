@@ -22,6 +22,14 @@
         <label >Prenom</label>
         <input type="text" class="form-control"  placeholder="Prenom" name="prenom">
     </div>
+    <div class="form-group">
+        <label >Bac</label>
+        <select class="form-control"  name="bac_id">
+            @foreach($bac as $b)
+                <option value="{{$b->id}}">{{$b->nom}}</option>
+            @endforeach
+        </select>
+    </div>
     <button type="submit" class="btn btn-primary">Ajouter</button>
 </form>
 <a href="{{route('students')}}">Voir la liste des étudiants</a>
