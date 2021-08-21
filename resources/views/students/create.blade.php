@@ -23,6 +23,14 @@
         <input type="text" class="form-control"  placeholder="Prenom" name="prenom">
     </div>
     <div class="form-group">
+        <label >Email</label>
+        <input type="email" class="form-control"  placeholder="Email" name="email">
+    </div>
+    <div class="form-group">
+        <label>Mot de passe</label>
+        <input type="password" class="form-control"  placeholder="Mot de passe" name="mdp">
+    </div>
+    <div class="form-group">
         <label >Bac</label>
         <select class="form-control"  name="bac_id">
             @foreach($bac as $b)

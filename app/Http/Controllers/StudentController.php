@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Bac;
 use App\Models\Student;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StudentController extends Controller
 {
 
     public function index()
     {
-        $students = Student::orderBy('nom','asc')->paginate(10);
+        $students = Student::join('users', 'users.id', '=', 'students.user_id')->where('users.role','Eleve')->orderBy('users.name','asc')->paginate(10);
         return view('students.index',compact('students'));
     }
 
@@ -28,6 +29,8 @@ class StudentController extends Controller
         $request->validate([
             "nom"=>"required",
             "prenom"=>"required",
+            "email"=>"required",
+            "mdp"=>"required",
             "bac_id"=>"required",
         ]);
         Student::create($request->all());
@@ -58,11 +61,15 @@ class StudentController extends Controller
         $request->validate([
             "nom"=>"required",
             "prenom"=>"required",
+            "email"=>"required",
+            "mdp"=>"required",
             "bac_id"=>"required",
         ]);
         $student->update([
             "nom" => $request->nom,
             "prenom" => $request->prenom,
+            "email"=>$request->email,
+            "mdp"=>$request->mdp,
             "bac_id" => $request->bac_id,
         ]);
         //return back()->with("success","Etudiant modifié");
@@ -73,6 +80,7 @@ class StudentController extends Controller
     public function destroy(Student $student)
     {
         $student->delete();
-        return back()->with("success","Etudiant nomé '$student->nom' supprimé");
+        $nom = $student->user->name;
+        return back()->with("success","Etudiant nomé '$nom' supprimé");
     }
 }

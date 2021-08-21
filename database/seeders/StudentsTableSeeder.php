@@ -15,7 +15,7 @@ class StudentsTableSeeder extends Seeder
     public function run()
     {
         DB::table("students")->insert([
-            ["nom"=>"skander","prenom"=>"baccouche"],
+            ["nom"=>"aaa","prenom"=>"bbb"],
         ]);
     }
 }
