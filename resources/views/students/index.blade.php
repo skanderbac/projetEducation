@@ -1,6 +1,12 @@
 @extends("layouts.master")
+@section("title")
+    Elèves
+@endsection
+@section("page")
+    Elèves
+@endsection
 @section("contenu")
-    <p>Listes des etudiants</p>
+    <p>Listes des élèves</p>
     @if(session()->has("success"))
         <div class="alert alert-success">
             {{session()->get("success")}}
