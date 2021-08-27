@@ -65,6 +65,19 @@
                         Bonjour monsieur
                     </div>
                 </li>
+                @foreach($msg as $m)
+                    <li class="you">
+                        <div class="entete">
+                            <h3>{{$m->created_at}}</h3>
+                            <h2></h2>
+                            <span class="status blue"></span>
+                        </div>
+                        <div class="triangle"></div>
+                        <div class="message">
+                            {{$m->messsage}}
+                        </div>
+                    </li>
+                @endforeach
             </ul>
             <footer>
                 <textarea placeholder="Ecrire votre message"></textarea>
