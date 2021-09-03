@@ -7,85 +7,170 @@
 @endsection
 @section("contenu")
     <div id="container">
+        <input type="hidden" id="valeur" value="0">
         <aside>
             <header>
-                <input type="text" placeholder="search">
+                <input type="text" placeholder="recherche">
             </header>
-            <ul>
-                <li>
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
-                    <div>
-                        <h2>Madyson Johnston</h2>
-                        <h3>
-                            <span class="status green"></span>
-                            Enseignant
-                        </h3>
-                    </div>
-                </li>
-                <li>
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_02.jpg" alt="">
-                    <div>
-                        <h2>Trent Botsford</h2>
-                        <h3>
-                            <span class="status orange"></span>
-                            Eleve
-                        </h3>
-                    </div>
-                </li>
+            <ul id="result">
+
             </ul>
         </aside>
         <main>
             <header>
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
-                <div>
-                    <h2>Madyson Johnston</h2>
+
+                    <h2 id="name"></h2>
                     <h3></h3>
-                </div>
+
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="">
             </header>
+
             <ul id="chat">
-                <li class="me">
-                    <div class="entete">
-                        <span class="status green"></span>
-                        <h3>10:12AM, Auj</h3>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                        Bonjour
-                    </div>
-                </li>
-                <li class="you">
-                    <div class="entete">
-                        <h3>10:12AM, Auj</h3>
-                        <h2></h2>
-                        <span class="status blue"></span>
-                    </div>
-                    <div class="triangle"></div>
-                    <div class="message">
-                        Bonjour monsieur
-                    </div>
-                </li>
-                @foreach($msg as $m)
-                    <li class="you">
-                        <div class="entete">
-                            <h3>{{$m->created_at}}</h3>
-                            <h2></h2>
-                            <span class="status blue"></span>
-                        </div>
-                        <div class="triangle"></div>
-                        <div class="message">
-                            {{$m->messsage}}
-                        </div>
-                    </li>
-                @endforeach
+
             </ul>
+
             <footer>
-                <textarea placeholder="Ecrire votre message"></textarea>
+                <textarea placeholder="Ecrire votre message" id="message"></textarea>
                 <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="">
-                <a href="#">Envoyer</a>
+                <a href="javascript:void(0)" id="envoyer">Envoyer</a>
             </footer>
         </main>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+
+    <script>
+        $(function () {
+            //window.location.href=new URL('/chat?chatbox=1', 'http://127.0.0.1:8000');
+            LoadMsg($('#valeur').val());
+            LoadBox();
+            $('#envoyer').click(function(){
+                sendMsg(1)
+            });
+
+
+        });
+
+
+        function LoadMsg(chatbox_id) {
+            $.ajax({
+                type: "GET",
+                url: "chat/getMessage/"+chatbox_id,
+                data: { chatbox_id: chatbox_id },
+                dataType: "json",
+                success: function (data) {
+                    $('#chat').empty();
+                    $.each(data, function (i, item) {
+                        if (item.user_id === 31) {
+                            var rows = "<li class='me'>"+
+                                "<div class='entete'>"+
+                                "<span class='status green'></span>"+
+                                "<h3>"+item.created_at+"</h3>"+
+                                "</div>"+
+                                "<div class='triangle'></div>"+
+                                "<div class='message'>"+
+                                item.message+
+                                "</div>"+
+                                "</li>";
+                        } else {
+                            var rows = "<li class='you'>"+
+                                "<div class='entete'>"+
+                                "<span class='status green'></span>"+
+                                "<h3>"+item.created_at+"</h3>"+
+                                "</div>"+
+                                "<div class='triangle'></div>"+
+                                "<div class='message'>"+
+                                item.message+
+                                "</div>"+
+                                "</li>";
+                        }
+                        $("#chat").append(rows);
+                    });
+
+                }
+            });
+        }
+
+        function sendMsg(chatbox_id) {
+            var message = $("#message").val();
+            $.ajax({
+                type: "POST",
+                url: "chat/sendMessage",
+                data: {
+                    message: message,
+                    user_id: 31,//session
+                    chatbox_id:$("#valeur").val(),
+                },
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: "json",
+                success: function (data) {
+                    $("#message").val("");
+                }
+            });
+        }
+        function setChatBox(user1_id,user2_id,nom) {
+            $("#name").html(nom);
+            $.ajax({
+                type: "POST",
+                url: "chat/getChatBox",
+                data: {
+                    user1_id: user1_id,
+                    user2_id: user2_id,
+                },
+                dataType: "json",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    $.each(data, function (i, item) {
+                        $("#valeur").val(item.id);
+                    });
+                }
+            });
+        }
+        function LoadBox() {
+            $.ajax({
+                type: "POST",
+                url: "chat/getBox",
+                data: { user_id: 31 },//session
+                dataType: "json",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function (data) {
+                    $('#result').empty();
+                    $.each(data, function (i, item) {
+                        if (item.id !== 31){
+                            var rows = '<li><a href="javascript:void(0)" onclick="setChatBox('+item.user1_id+','+item.user2_id+',\''+item.name+'\');">'+
+                                '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">'+
+                                '<div>'+
+                                '<h2 style="color: green">'+item.name+'</h2>'+
+                                '<h3>'+
+                                '<span class="status green"></span>'+
+                                item.role+
+                                '</h3>'+
+                                '</div></a>'+
+                                '</li>';
+                            $("#result").append(rows);
+                        }
+                    });
+
+                }
+            });
+        }
+
+        setInterval(function () {
+            LoadMsg($('#valeur').val());
+            //LoadBox();
+        }, 500);
+
+    </script>
+
+
+
     <style>
         *{
             box-sizing:border-box;
@@ -314,6 +399,8 @@
             display:inline-block;
         }
     </style>
+
+
 
 
 @endsection

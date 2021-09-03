@@ -41,6 +41,10 @@ Route::put('/enseignants/update/{enseignant}',[\App\Http\Controllers\StudentCont
 Route::delete('/enseignants/delete/{enseignant}',[\App\Http\Controllers\StudentController::class,"destroy"])->name("teachers.delete");
 /********************************************************************************************************************************************/
 Route::get('/chat',[\App\Http\Controllers\ChatController::class,"index"])->name("chat");
+Route::get('/chat/getMessage/{chatbox_id}',[\App\Http\Controllers\ChatController::class,"getMessage"])->name("chat.getmessage");
+Route::post('/chat/sendMessage',[\App\Http\Controllers\ChatController::class,"sendMessage"])->name("chat.sendmessage");
+Route::post('/chat/getBox',[\App\Http\Controllers\ChatController::class,"getBox"])->name("chat.getBox");
+Route::post('/chat/getChatBox',[\App\Http\Controllers\ChatController::class,"getChatBox"])->name("chat.getChatBox");
 /********************************************************************************************************************************************/
 Route::get('/admin/reclamations',[\App\Http\Controllers\ReclamationController::class,"index"])->name("recadmin");
 Route::get('/reclamations',[\App\Http\Controllers\ReclamationController::class,"mesreclamations"])->name("mesreclamations");
