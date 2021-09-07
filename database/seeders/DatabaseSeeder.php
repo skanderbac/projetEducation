@@ -14,10 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         \App\Models\User::factory(50)->create();
+         //\App\Models\User::factory(50)->create();
         $this->call(BacTableSeeder::class);
-        Student::factory(30)->create();
+        //Student::factory(30)->create();
         $this->call(MatiereTableSeeder::class);
-        //$this->call(StudentsTableSeeder::class);
+        //$this->call(MatiereBacSeeder::class);
+        //$this->call(CourTableSeeder::class);
     }
 }

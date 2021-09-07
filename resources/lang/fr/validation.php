@@ -9,6 +9,7 @@ return[
       ],
       'email' => [
           'required' => 'le champ email est obligatoire',
+          'unique' => 'Email existe deja'
       ],
       'mdp' => [
           'required' => 'le champ mot de passe est obligatoire',

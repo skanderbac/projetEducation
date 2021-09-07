@@ -31,7 +31,11 @@
             <label >Matiere</label>
             <select class="form-control"  name="matiere_id">
                 @foreach($matiere as $b)
-                    <option value="{{$b->id}}">{{$b->nom}}</option>
+                    @if($b->id == $student->bac_id)
+                        <option value="{{$b->id}}" selected>{{$b->nom}}</option>
+                    @else
+                        <option value="{{$b->id}}" >{{$b->nom}}</option>
+                    @endif
                 @endforeach
             </select>
         </div>

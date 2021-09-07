@@ -14,6 +14,7 @@ class CreateMatiereBacTable extends Migration
     public function up()
     {
         Schema::create('matiere_bac', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('matiere_id')->constrained();
             $table->foreignId('bac_id')->constrained();
             $table->timestamps();

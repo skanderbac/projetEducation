@@ -8,11 +8,15 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     use HasFactory;
-    protected $fillable = ["user_id","matiere_id"];
+    protected $fillable = ["confirmed","user_id","matiere_id"];
     public function User(){
         return $this->belongsTo(User::class);
     }
     public function Matiere(){
         return $this->belongsTo(Matiere::class);
+    }
+    public function Supports()
+    {
+        return $this->hasMany(Support::class, 'teacher_id');
     }
 }

@@ -26,15 +26,12 @@ class StudentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "nom"=>"required",
-            "prenom"=>"required",
-            "email"=>"required",
-            "mdp"=>"required",
+            "user_id"=>"required",
             "bac_id"=>"required",
         ]);
         Student::create($request->all());
-        //return back()->with("success","Etudiant ajouté");
-        return redirect('/students')->with("success","Etudiant ajouté");
+        return redirect('/')->with("success","Vous avez choisie votre bac avec succés");
+
     }
 
     /**

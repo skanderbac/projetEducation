@@ -29,7 +29,7 @@
             <td>Non traité</td>
             <td>23/08/2021</td>
             <td><a href="modifier" class="btn btn-info">Modifier</a></td>
-            <td><a href="#" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cet etudiant ?')){document.getElementById('form-recid').submit()}">Supprimer</a></td>
+            <td><a href="#" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cette réclamation ?')){document.getElementById('form-recid').submit()}">Supprimer</a></td>
             <form id="form-recid" method="post" action="supprimerRec">
                 @csrf
                 <input type="hidden" name="_method" value="delete">

@@ -9,6 +9,11 @@ use phpDocumentor\Reflection\Types\Integer;
 
 class ChatController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $msg = Chat::join('chatboxes', 'chatboxes.id', '=', 'chats.chatbox_id')

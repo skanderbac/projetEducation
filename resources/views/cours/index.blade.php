@@ -1,4 +1,4 @@
-@extends("layouts.master")
+@extends("layouts.front")
 @section("title")
     Bac Mathématiques
 @endsection
@@ -6,146 +6,100 @@
     Bac Mathématiques
 @endsection
 @section("contenu")
-    <div class="container-fluid">
-        <!-- COLOR PALETTE -->
-        <div class="card card-default color-palette-box">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <i class="fas fa-tag"></i>
-                    Mathématiques
-                </h3>
-            </div>
-            <div class="card-body">
-                <div class="col-12">
-                    <br>
-                    <h4>Fonctions logarithmes</h4>
-                    <br>
-                </div>
-                <!-- /.col-12 -->
-                <div class="row">
+    <section id="about">
+        <div class="container">
+            <div class="row">
 
-                    <div class="col-sm-3">
-                        <div class="position-relative p-3 bg-green" style="height: 180px">
-                            <div class="ribbon-wrapper">
-                                <div class="ribbon bg-primary">
-                                    4.3/5
-                                </div>
-                            </div>
-                            Mr/Mme Oleta Keeling<br>
-                            <a href=""><small>Cliquer ici</small></a>
-                            <br>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
+                <div class="container-fluid">
+                    <!-- COLOR PALETTE -->
+                    <div class="card card-default color-palette-box">
+                        <div class="card-header">
+                            <h2 class="card-title">
+
+                                @foreach($matiere as $m)
+                                    {{$m->nom}}
+                                @endforeach
+                            </h2>
                         </div>
-                    </div>
 
-                    <div class="col-sm-3">
-                        <div class="position-relative p-3 bg-green" style="height: 180px">
-                            <div class="ribbon-wrapper">
-                                <div class="ribbon bg-primary">
-                                    4.5/5
+
+                        <div class="card-body">
+                            @foreach($cours as $c)
+                                <div class="col-12">
+                                    <br>
+                                    <h4>{{$c->titre}}</h4>
+                                    <br>
                                 </div>
-                            </div>
-                            Mr/Mme Gabriella Hane <br>
-                            <a href=""><small>Cliquer ici</small></a>
-                            <br>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
+                                <div class="row">
+                                    @foreach($c->supports as $s)
+                                        <div class="col-sm-3">
+                                            <div class="position-relative p-3 bg-green" style="height: 180px">
+                                                <div class="ribbon-wrapper">
+                                                    <div class="ribbon bg-primary">
+                                                        4.3/5
+                                                    </div>
+                                                </div>
+                                                {{$s->teacher->user->name}}<br>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-lg{{$s->id}}"><small>Cliquer ici</small></a>
+                                                <br>
+                                                @if(Auth::user()->role=='Eleve')
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star checked"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                @else
+                                                    <button class="btn btn-danger">Supprimer</button>
+                                                @endif
 
-                </div>
-                <!-- /.row -->
-                <div class="col-12">
-                    <br>
-                    <h4 class="mt-3">Fonctions exponentielles</h4>
-                    <br>
-                </div>
-                <!-- /.col-12 -->
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="position-relative p-3 bg-green" style="height: 180px">
-                            <div class="ribbon-wrapper">
-                                <div class="ribbon bg-primary">
-                                    4.3/5
+                                            </div>
+                                        </div>
+
+                                        <div class="modal fade" id="modal-lg{{$s->id}}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">{{$c->titre}}</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+
+                                                            @foreach($s->pieces as $p )
+                                                                <div class="col-sm-3">
+                                                                    <iframe src="{{asset('files/'.$p->url)}}" style="width: 200px;height: 300px;"></iframe>
+                                                                    <br>
+                                                                    <a href="{{asset('files/'.$p->url)}}" target="_blank">
+                                                                        Télécharger
+                                                                    </a>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+                                    @endforeach
+
+
                                 </div>
-                            </div>
-                            Mr/Mme Precious Doyle<br>
-                            <a href=""><small>Cliquer ici</small></a>
-                            <br>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                        </div>
-                    </div>
+                            @endforeach
 
-                    <div class="col-sm-3">
-                        <div class="position-relative p-3 bg-green" style="height: 180px">
-                            <div class="ribbon-wrapper">
-                                <div class="ribbon bg-primary">
-                                    4.2/5
-                                </div>
-                            </div>
-                            Mr/Mme Oleta Keeling<br>
-                            <a href=""><small>Cliquer ici</small></a>
-                            <br>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star checked"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
                         </div>
+                        <!-- /.card-body -->
                     </div>
-
                 </div>
-
 
             </div>
-            <!-- /.card-body -->
         </div>
-    </div>
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg">
-        Launch Large Modal
-    </button>
+    </section>
 
-    <div class="modal fade" id="modal-lg">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Fonctions logarithmes</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <iframe src="{{asset('files/video.mp4')}}" style="width: 200px;height: 300px;"></iframe>
-                        </div>
-                        <div class="col-sm-3">
-                            <iframe src="{{asset('files/CoursMath-Fonctionslogarithmes.pdf')}}" style="width: 200px;height: 300px;"></iframe>
-                            <br>
-                            <a href="{{asset('files/CoursMath-Fonctionslogarithmes.pdf')}}" target="_blank">
-                                Télécharger
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="modal-footer justify-content-between">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
-    </div>
 @endsection

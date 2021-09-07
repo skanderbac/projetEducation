@@ -15,6 +15,7 @@ class CreateTeachersTable extends Migration
     {
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
+            $table->integer('confirmed')->default(0);
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('matiere_id')->constrained('matieres');
             $table->timestamps();

@@ -24,14 +24,37 @@ class TeacherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            "nom"=>"required",
-            "prenom"=>"required",
-            "email"=>"required",
-            "mdp"=>"required",
-            "bac_id"=>"required",
+            "matiere_id"=>"required",
+            "user_id"=>"required",
         ]);
-        User::create($request->all());
-        Teacher::create();
-        return redirect('/students')->with("success","Enseignant ajouté");
+        Teacher::create($request->all());
+        return redirect('/')->with("success","Vous avez choisi votre matiere avec succés");
+    }
+
+    public function enseignants()
+    {
+        $teachers = Teacher::join('users', 'users.id', '=', 'teachers.user_id')->where('users.role','Enseignant')->orderBy('teachers.confirmed','asc')->paginate(10);
+        return view('teachers.indexadmin',compact('teachers'));
+    }
+
+    public function confirme(Request $request)
+    {
+        $e=Teacher::select('teachers.id')->join('users','users.id','=','teachers.user_id')->where('users.id','=',$request->get('teacher_id'))->first();
+        $ens=Teacher::find($e->id);
+        $ens->update([
+            'confirmed'=>1
+        ]);
+        return redirect('/admin/enseignants');
+    }
+
+    public function destroy(Request $request)
+    {
+        $e=Teacher::select('teachers.id')->join('users','users.id','=','teachers.user_id')->where('users.id','=',$request->get('teacher_id'))->first();
+        $enseignant=Teacher::find($e->id);
+        $nom = $enseignant->user->name;
+        $enseignant->delete();
+        $user=User::find($enseignant->user->id);
+        $user->delete();
+        return redirect('/admin/enseignants')->with("success","Enseignant(e) nomé ".$nom." est supprimé(e)");
     }
 }
