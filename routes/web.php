@@ -48,7 +48,10 @@ Route::post('/chat/getChatBox',[\App\Http\Controllers\ChatController::class,"get
 Route::get('/admin/reclamations',[\App\Http\Controllers\ReclamationController::class,"index"])->name("recadmin");
 Route::get('/reclamations',[\App\Http\Controllers\ReclamationController::class,"mesreclamations"])->name("mesreclamations");
 Route::get('/reclamations/create',[\App\Http\Controllers\ReclamationController::class,"create"])->name("reclamation.create");
-Route::get('/reclamations/update',[\App\Http\Controllers\ReclamationController::class,"update"])->name("reclamation.update");
+Route::post('/reclamationajouter',[\App\Http\Controllers\ReclamationController::class,"store"])->name("reclamation.store");
+Route::get('/reclamations/update/{reclamation}',[\App\Http\Controllers\ReclamationController::class,"edit"])->name("reclamation.edit");
+Route::post('/reclamationmodifier',[\App\Http\Controllers\ReclamationController::class,"update"])->name("reclamation.update");
+Route::post('/reclamationsupprimer',[\App\Http\Controllers\ReclamationController::class,"destroy"])->name("reclamation.delete");
 Route::get('/reclamations/detail/{reclamation}',[\App\Http\Controllers\ReclamationController::class,"detail"])->name("reclamation.detail");
 /********************************************************************************************************************************************/
 Route::get('/cours/{matiere_id}',[\App\Http\Controllers\CoursController::class,"index"])->name("cours");

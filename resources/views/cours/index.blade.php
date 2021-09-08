@@ -39,7 +39,7 @@
                                                         4.3/5
                                                     </div>
                                                 </div>
-                                                {{$s->teacher->user->name}}<br>
+                                                <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-{{$s->teacher->user->id}}">Mr/Mme{{" ".$s->teacher->user->name}}</a><br><br>
                                                 <a href="javascript:void(0)" data-toggle="modal" data-target="#modal-lg{{$s->id}}"><small>Cliquer ici</small></a>
                                                 <br>
                                                 @if(Auth::user()->role=='Eleve')
@@ -60,6 +60,39 @@
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <h4 class="modal-title">{{$c->titre}}</h4>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div class="row">
+
+                                                            @foreach($s->pieces as $p )
+                                                                <div class="col-sm-3">
+                                                                    <iframe src="{{asset('files/'.$p->url)}}" style="width: 200px;height: 300px;"></iframe>
+                                                                    <br>
+                                                                    <a href="{{asset('files/'.$p->url)}}" target="_blank">
+                                                                        Télécharger
+                                                                    </a>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="modal-footer justify-content-between">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                                                    </div>
+                                                </div>
+                                                <!-- /.modal-content -->
+                                            </div>
+                                            <!-- /.modal-dialog -->
+                                        </div>
+
+                                        <div class="modal fade" id="modal-{{$s->teacher->user->id}}">
+                                            <div class="modal-dialog modal-lg">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Mr/Mme{{" ".$s->teacher->user->name}}</h4>
                                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
                                                         </button>

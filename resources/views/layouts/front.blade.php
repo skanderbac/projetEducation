@@ -54,11 +54,13 @@
                         <li ><a href="/" class="smoothScroll">Acceuil</a></li>
                         <li ><a href="/matieres" class="smoothScroll">Matieres</a></li>
                         <li ><a href="/chat" class="smoothScroll">Chat</a></li>
+                        <li ><a href="/reclamations" class="smoothScroll">Réclamation</a></li>
                     @elseif(Auth::user()->role=='Enseignant')
                         <li><a href="/" class="smoothScroll">Acceuil</a></li>
                         <li><a href="/courscreate" class="smoothScroll">Ajouter un support</a></li>
                         <li><a href="/supports" class="smoothScroll">Mes supports</a></li>
                         <li ><a href="/chat" class="smoothScroll">Chat</a></li>
+                        <li ><a href="/reclamations" class="smoothScroll">Réclamation</a></li>
                     @endif
                 @endguest
             </ul>

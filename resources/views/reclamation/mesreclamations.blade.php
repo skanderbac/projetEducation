@@ -1,41 +1,50 @@
-@extends("layouts.master")
+@extends("layouts.front")
 @section("title")
-    Réclamations
+    Réclamations |
 @endsection
-@section("page")
-    Réclamations
-@endsection
-@section("contenu")
-    <p>Mes Réclamations</p>
-    @if(session()->has("success"))
-        <div class="alert alert-success">
-            {{session()->get("success")}}
-        </div>
-    @endif
-    <table class="table">
-        <tr>
-            <th>#</th>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Etat</th>
-            <th>Date de création</th>
-        </tr>
-        <tbody>
 
-        <tr>
-            <td>1</td>
-            <td>Probleme dans le site</td>
-            <td>Je ne peut pas acceder au chat</td>
-            <td>Non traité</td>
-            <td>23/08/2021</td>
-            <td><a href="modifier" class="btn btn-info">Modifier</a></td>
-            <td><a href="#" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cette réclamation ?')){document.getElementById('form-recid').submit()}">Supprimer</a></td>
-            <form id="form-recid" method="post" action="supprimerRec">
-                @csrf
-                <input type="hidden" name="_method" value="delete">
-            </form>
-        </tr>
-        </tbody>
-    </table>
-    <a href="">Passer une réclamation</a>
+@section("contenu")
+    <section id="about">
+        <div id="container">
+
+            <p>Mes Réclamations</p>
+            @if(session()->has("success"))
+                <div class="alert alert-success">
+                    {{session()->get("success")}}
+                </div>
+            @endif
+            <table class="table">
+                <tr>
+                    <th>#</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Etat</th>
+                    <th>Date de création</th>
+                </tr>
+                <tbody>
+                @foreach($reclamations as $r)
+                    <tr>
+                        <td>{{$loop->index+1}}</td>
+                        <td>{{$r->type}}</td>
+                        <td>{{$r->description}}</td>
+                        @if($r->etat==0)
+                            <td>Non traité</td>
+                        @else
+                            <td>traité</td>
+                        @endif
+                        <td>{{$r->created_at}}</td>
+                        <td><a href="/reclamations/update/{{$r->id}}" class="btn btn-info">Modifier</a></td>
+                        <td><a href="javascript:void(0)" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cette réclamation ?')){document.getElementById('form-rec{{$r->id}}').submit()}">Supprimer</a></td>
+                        <form id="form-rec{{$r->id}}" method="post" action="/reclamationsupprimer">
+                            @csrf
+                            <input type="hidden" name="reclamation_id" value="{{$r->id}}">
+                        </form>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+            <a href="/reclamations/create">Passer une réclamation</a>
+
+        </div>
+    </section>
 @endsection

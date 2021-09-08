@@ -6,7 +6,6 @@
     Réclamations
 @endsection
 @section("contenu")
-    <p>Listes des Réclamations</p>
     @if(session()->has("success"))
         <div class="alert alert-success">
             {{session()->get("success")}}
@@ -15,38 +14,31 @@
     <table class="table">
         <tr>
             <th>#</th>
-            <th>Utilisateur</th>
             <th>Type</th>
             <th>Description</th>
             <th>Etat</th>
             <th>Date de création</th>
         </tr>
         <tbody>
-
+        @foreach($reclamations as $r)
             <tr>
-                <td>1</td>
-                <td>Albin Green</td>
-                <td>Probleme dans le site</td>
-                <td>Je ne peut pas acceder au chat</td>
-                <td>Non traité</td>
-                <td>23/08/2021</td>
-                <td><a href="repondre" class="btn btn-info">Répondre</a></td>
-                <td><a href="#" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cet etudiant ?')){document.getElementById('form-recid').submit()}">Supprimer</a></td>
-                <form id="form-recid" method="post" action="supprimerRec">
+                <td>{{$loop->index+1}}</td>
+                <td>{{$r->type}}</td>
+                <td>{{$r->description}}</td>
+                @if($r->etat==0)
+                    <td>Non traité</td>
+                @else
+                    <td>traité</td>
+                @endif
+                <td>{{$r->created_at}}</td>
+                <td><a href="/admin/reclamations/detail/{{$r->id}}" class="btn btn-info">Voir detail</a></td>
+                <td><a href="javascript:void(0)" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cette réclamation ?')){document.getElementById('form-recid').submit()}">Supprimer</a></td>
+                <form id="form-recid" method="post" action="/supprimerRecadmin">
                     @csrf
                     <input type="hidden" name="_method" value="delete">
                 </form>
             </tr>
-
-            <tr>
-                <td>2</td>
-                <td>Geraldine Kautzer</td>
-                <td>Probleme avec un élève</td>
-                <td>test</td>
-                <td>Traité</td>
-                <td>20/08/2021</td>
-                <td><a href="Consult" class="btn btn-info">Voir</a></td>
-            </tr>
+        @endforeach
         </tbody>
     </table>
 @endsection

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Reclamation extends Model
 {
     use HasFactory;
-    protected $fillable = ["confirmed","user_id"];
+    protected $fillable = ["type","description","fichier","confirmed","user_id"];
     public function User(){
         return $this->belongsTo(User::class);
     }

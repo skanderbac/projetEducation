@@ -17,9 +17,9 @@ class CreateReclamationsTable extends Migration
             $table->id();
             $table->string('type');
             $table->string('description');
-            $table->string('fichier');
-            $table->integer('etat');
-            $table->string('reponse');
+            $table->string('fichier')->default('');
+            $table->integer('etat')->default(0);
+            $table->string('reponse')->default('');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
