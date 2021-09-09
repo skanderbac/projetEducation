@@ -33,8 +33,8 @@ class HomeController extends Controller
                     $confirmed++;
                     $blocked=$item->blocked;
                 }
-                $b=Bac::join('students','students.bac_id','=','bacs.id')
-                    ->where('students.user_id','=',auth()->user()->id)
+                $b=Bac::join('Students','Students.bac_id','=','Bacs.id')
+                    ->where('Students.user_id','=',auth()->user()->id)
                     ->first();
                 return view('welcome',compact('bac','matiere','confirmed','b','blocked'));
             }
@@ -46,7 +46,7 @@ class HomeController extends Controller
                 foreach ($liste as $item){
                     $confirmed++;
                 }
-                $m=Matiere::join('teachers','teachers.matiere_id','=','matieres.id')
+                $m=Matiere::join('Teachers','Teachers.matiere_id','=','Matieres.id')
                     ->where('teachers.user_id','=',auth()->user()->id)
                     ->first();
                 return view('welcome',compact('matiere','confirmed','m'));
