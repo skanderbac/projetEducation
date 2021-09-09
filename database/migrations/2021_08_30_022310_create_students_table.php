@@ -15,9 +15,9 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bac_id')->constrained('bacs');
+            $table->foreignId('bac_id')->constrained('Bacs');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('matiere_id')->constrained('matieres');
+            $table->foreignId('matiere_id')->constrained('Matieres');
             $table->integer('blocked')->default(0);
             $table->timestamps();
         });
@@ -34,6 +34,6 @@ class CreateStudentsTable extends Migration
         /*Schema::table('students',function (Blueprint $table){
            $table->dropForeign('bac_id');
         });*/
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('Students');
     }
 }
