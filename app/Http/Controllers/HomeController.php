@@ -28,13 +28,15 @@ class HomeController extends Controller
                 $confirmed=0;
 
                 $liste = Student::where('user_id','=',auth()->user()->id)->get();
+                $blocked=0;
                 foreach ($liste as $item){
                     $confirmed++;
+                    $blocked=$item->blocked;
                 }
                 $b=Bac::join('students','students.bac_id','=','bacs.id')
                     ->where('students.user_id','=',auth()->user()->id)
                     ->first();
-                return view('welcome',compact('bac','matiere','confirmed','b'));
+                return view('welcome',compact('bac','matiere','confirmed','b','blocked'));
             }
             else if(auth()->user()->role=="Enseignant"){
                 $matiere= Matiere::all();

@@ -525,56 +525,57 @@
         </div>
     @endif
     @if(Auth::user()->role =="Eleve" )
-        @if( $confirmed==0)
-            <section id="team">
-                <div class="container">
-                    <div class="row">
+        @if($blocked==0)
+            @if( $confirmed==0)
+                <section id="team">
+                    <div class="container">
+                        <div class="row">
 
-                        <div class="col-md-12 col-sm-12">
-                            <div class="section-title">
-                                <h2>Continuez votre inscription<small>Veuillez choisir votre bac</small></h2>
+                            <div class="col-md-12 col-sm-12">
+                                <div class="section-title">
+                                    <h2>Continuez votre inscription<small>Veuillez choisir votre bac</small></h2>
+                                </div>
                             </div>
+
+                            <form method="post" action="{{route('user.bac')}}" >
+                                @csrf
+                                <div class="form-group">
+                                    <label>Bac</label>
+                                    <select class="form-control"  name="bac_id">
+                                        @foreach($bac as $b)
+                                            <option value="{{$b->id}}">{{$b->nom}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Matiere optionnelle</label>
+                                    <select class="form-control"  name="matiere_id">
+                                        @foreach($matiere as $m)
+                                            <option value="{{$m->id}}">{{$m->nom}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                                <button type="submit" class="btn btn-primary">Confirmer</button>
+                            </form>
+
                         </div>
-
-                        <form method="post" action="{{route('user.bac')}}" >
-                            @csrf
-                            <div class="form-group">
-                                <label>Bac</label>
-                                <select class="form-control"  name="bac_id">
-                                    @foreach($bac as $b)
-                                        <option value="{{$b->id}}">{{$b->nom}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Matiere optionnelle</label>
-                                <select class="form-control"  name="matiere_id">
-                                    @foreach($matiere as $m)
-                                        <option value="{{$m->id}}">{{$m->nom}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                            <button type="submit" class="btn btn-primary">Confirmer</button>
-                        </form>
-
                     </div>
-                </div>
-            </section>
-        @else
-            <section id="team">
-                <div class="container">
-                    <div class="row">
-                        <div class="card card-primary card-outline">
-                            <div class="card-body box-profile">
-                                <div class="text-center">
-                                    @if(Auth::user()->name!="")
-                                        <img class="profile-user-img img-fluid img-circle" src="{{asset('photos/'.Auth::user()->photo)}}" style="width: 200px;height: 200px;" alt="User profile picture">
+                </section>
+            @else
+                <section id="team">
+                    <div class="container">
+                        <div class="row">
+                            <div class="card card-primary card-outline">
+                                <div class="card-body box-profile">
+                                    <div class="text-center">
+                                        @if(Auth::user()->name!="")
+                                            <img class="profile-user-img img-fluid img-circle" src="{{asset('photos/'.Auth::user()->photo)}}" style="width: 200px;height: 200px;" alt="User profile picture">
 
 
-                                    @else
-                                        <img class="profile-user-img img-fluid img-circle" src="{{asset('photos/'.Auth::user()->photo)}}" style="width: 200px;height: 200px;" alt="User profile picture">
-                                    @endif
+                                        @else
+                                            <img class="profile-user-img img-fluid img-circle" src="{{asset('photos/'.Auth::user()->photo)}}" style="width: 200px;height: 200px;" alt="User profile picture">
+                                        @endif
                                         <form  class="form-horizontal" method="post" action="/photo/edit" enctype="multipart/form-data">
                                             @csrf
                                             <div class="form-group">
@@ -591,41 +592,44 @@
                                             <input type="submit" class="btn btn-primary" value="Modifier">
                                         </form>
 
+                                    </div>
+
+                                    <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
+
+                                    <p class="text-muted text-center">{{Auth::user()->role}}</p>
+
+                                    <ul class="list-group list-group-unbordered mb-3">
+                                        <li class="list-group-item">
+                                            <b>Email </b> <a class="float-right">{{Auth::user()->email}}</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <b>Bac </b> <a class="float-right">{{$b->nom}}</a>
+                                        </li>
+                                    </ul>
+
+                                    <a href="/profile/edit" class="btn btn-primary btn-block"><b>Editez votre profile</b></a>
                                 </div>
-
-                                <h3 class="profile-username text-center">{{Auth::user()->name}}</h3>
-
-                                <p class="text-muted text-center">{{Auth::user()->role}}</p>
-
-                                <ul class="list-group list-group-unbordered mb-3">
-                                    <li class="list-group-item">
-                                        <b>Email </b> <a class="float-right">{{Auth::user()->email}}</a>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <b>Bac </b> <a class="float-right">{{$b->nom}}</a>
-                                    </li>
-                                </ul>
-
-                                <a href="/profile/edit" class="btn btn-primary btn-block"><b>Editez votre profile</b></a>
+                                <!-- /.card-body -->
                             </div>
-                            <!-- /.card-body -->
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
+            @endif
+        @else
+            <div class="alert alert-danger">
+                Vous etes bloqué par l'admin
+            </div>
         @endif
     @elseif(Auth::user()->role =="Enseignant")
         @if( $confirmed==0)
             <section id="team">
                 <div class="container">
                     <div class="row">
-
                         <div class="col-md-12 col-sm-12">
                             <div class="section-title">
                                 <h2>Continuez votre inscription<small>Veuillez choisir la matiere que vous enseignez</small></h2>
                             </div>
                         </div>
-
                         <form method="post" action="{{route('teachers.store')}}" >
                             @csrf
                             <div class="form-group">

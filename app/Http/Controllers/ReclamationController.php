@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Reclamation;
+use App\Models\Student;
 use Illuminate\Http\Request;
 
 class ReclamationController extends Controller
@@ -27,19 +28,41 @@ class ReclamationController extends Controller
 
     public function mesreclamations()
     {
-        $reclamations=Reclamation::where('user_id','=',auth()->user()->id)->get();
-        return view('reclamation.mesreclamations',compact('reclamations'));
+        if(auth()->user()->role!='Admin'){
+            if(auth()->user()->role=='Eleve'){
+                $eleve=Student::where('user_id','=',auth()->user()->id)->first();
+                if($eleve->blocked==1){
+                    return redirect('/');
+                }
+            }
+            $reclamations=Reclamation::where('user_id','=',auth()->user()->id)->get();
+            return view('reclamation.mesreclamations',compact('reclamations'));
+        }
+        else{
+            return redirect('/admin/bacs')->with("alert","vous n'avez pas la permission pour cette page");
+        }
+
     }
     public function create()
     {
-        return view('reclamation.create');
+        if(auth()->user()->role!='Admin'){
+            return view('reclamation.create');
+        }
+        else{
+            return redirect('/admin/bacs')->with("alert","vous n'avez pas la permission pour cette page");
+        }
     }
     public function edit($reclamation)
     {
-        $reclamation=Reclamation::find($reclamation);
+        if(auth()->user()->role!='Admin'){
+            $reclamation=Reclamation::find($reclamation);
 
+            return view('reclamation.update',compact('reclamation'));
+        }
+        else{
+            return redirect('/admin/bacs')->with("alert","vous n'avez pas la permission pour cette page");
+        }
 
-        return view('reclamation.update',compact('reclamation'));
     }
     public function store(Request $request)
     {
@@ -90,9 +113,14 @@ class ReclamationController extends Controller
     }
 
     public function detailAdmin($reclamation){
-        $reclamation=Reclamation::find($reclamation);
+        if(auth()->user()->role=='Admin'){
+            $reclamation=Reclamation::find($reclamation);
 
-        return view('reclamation.detailadmin',compact('reclamation'));
+            return view('reclamation.detailadmin',compact('reclamation'));
+        }
+        else{
+            return redirect('/')->with("alert","vous n'avez pas la permission pour cette page");
+        }
     }
 
     public function reponse(Request $request){
@@ -109,9 +137,15 @@ class ReclamationController extends Controller
     }
 
     public function detail($reclamation){
-        $reclamation=Reclamation::find($reclamation);
+        if(auth()->user()->role!='Admin'){
+            $reclamation=Reclamation::find($reclamation);
 
-        return view('reclamation.detail',compact('reclamation'));
+            return view('reclamation.detail',compact('reclamation'));
+        }
+        else{
+            return redirect('/admin/bacs')->with("alert","vous n'avez pas la permission pour cette page");
+        }
+
     }
 
 }

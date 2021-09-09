@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Chat;
 use App\Models\Chatbox;
+use App\Models\Student;
 use Illuminate\Http\Request;
 use phpDocumentor\Reflection\Types\Integer;
 
@@ -21,6 +22,13 @@ class ChatController extends Controller
                 ->join('users', 'users.id', '=', 'chats.user_id')
                 ->where('chats.chatbox_id',1)
                 ->get();
+
+            if(auth()->user()->role=='Eleve'){
+                $eleve=Student::where('user_id','=',auth()->user()->id)->first();
+                if($eleve->blocked==1){
+                    return redirect('/');
+                }
+            }
             return view('chat.index',compact('msg'));
         }
         else{
@@ -34,6 +42,7 @@ class ChatController extends Controller
         $msg = Chat::join('chatboxes', 'chatboxes.id', '=', 'chats.chatbox_id')
             ->join('users', 'users.id', '=', 'chats.user_id')
             ->where('chats.chatbox_id',$chatbox_id)
+            ->orderBy('chats.created_at','ASC')
             ->get();
         return $msg;
     }

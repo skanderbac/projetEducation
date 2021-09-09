@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class TeacherController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
         $teachers = Teacher::join('users', 'users.id', '=', 'teachers.user_id')->where('users.role','Enseignant')->orderBy('users.name','asc')->paginate(10);

@@ -16,8 +16,13 @@ class StudentController extends Controller
 
     public function index()
     {
-        $students = Student::with('User','bac')->paginate(10);
-        return view('students.index',compact('students'));
+        if(auth()->user()->role=='Admin'){
+            $students = Student::with('User','bac')->paginate(10);
+            return view('students.index',compact('students'));
+        }
+        else{
+            return redirect('/')->with("alert","vous n'avez pas la permission pour cette page");
+        }
     }
 
 

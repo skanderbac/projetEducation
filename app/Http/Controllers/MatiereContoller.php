@@ -21,14 +21,20 @@ class MatiereContoller extends Controller
     {
         $bac_id=0;
         $liste=Student::where('students.user_id','=',auth()->user()->id)->get();
+        $blocked=0;
         foreach ($liste as $item){
             $bac_id = $item->bac_id;
+            $blocked=$item->blocked;
         }
         $bac= Bac::where('id','=',$bac_id)->get();
         $matieres= Matiere::join('matiere_bac','matiere_bac.matiere_id','=','matieres.id')
             ->where('bac_id','=',$bac_id)
             ->get();
-        return view('matiere.index',compact('matieres','bac'));
+
+        if($blocked==1){
+            return redirect('/');
+        }
+        return view('matiere.index',compact('matieres','bac','blocked'));
     }
 
     public function all()
@@ -79,7 +85,6 @@ class MatiereContoller extends Controller
         else{
             return redirect('/')->with("alert","vous n'avez pas la permission pour cette page");
         }
-
     }
 
     public function storecours(Request $request)
