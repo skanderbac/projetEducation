@@ -13,7 +13,7 @@ class CreateMatieresTable extends Migration
      */
     public function up()
     {
-        Schema::table('Matieres', function (Blueprint $table) {
+        Schema::create('Matieres', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->string('type');
