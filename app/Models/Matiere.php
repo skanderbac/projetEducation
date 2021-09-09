@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Matiere extends Model
 {
     use HasFactory;
-    protected $table = 'Matieres';
     public function Bacs(){
         return $this->belongsToMany(Bac::class, 'Matiere_bac','matiere_id','bac_id')
             ->withTimestamps();
