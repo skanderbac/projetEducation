@@ -28,7 +28,6 @@ Route::get('/forgot-passwordd', function () {
 });
 
 Route::post('/userbac',[\App\Http\Controllers\StudentController::class,"store"])->name("user.bac");
-Route::get('/eleves',[\App\Http\Controllers\StudentController::class,"index"])->name("students");
 Route::get('/eleves/create',[\App\Http\Controllers\StudentController::class,"create"])->name("students.create");
 Route::post('/eleves/create',[\App\Http\Controllers\StudentController::class,"store"])->name("students.store");
 Route::get('/eleves/update/{student}',[\App\Http\Controllers\StudentController::class,"edit"])->name("students.edit");
@@ -40,12 +39,13 @@ Route::post('/enseignants/create',[\App\Http\Controllers\TeacherController::clas
 
 /********************************************************************************************************************************************/
 Route::get('/chat',[\App\Http\Controllers\ChatController::class,"index"])->name("chat");
+Route::post('/chat',[\App\Http\Controllers\ChatController::class,"createchatbox"])->name("chat.create");
+
 Route::get('/chat/getMessage/{chatbox_id}',[\App\Http\Controllers\ChatController::class,"getMessage"])->name("chat.getmessage");
 Route::post('/chat/sendMessage',[\App\Http\Controllers\ChatController::class,"sendMessage"])->name("chat.sendmessage");
 Route::post('/chat/getBox',[\App\Http\Controllers\ChatController::class,"getBox"])->name("chat.getBox");
 Route::post('/chat/getChatBox',[\App\Http\Controllers\ChatController::class,"getChatBox"])->name("chat.getChatBox");
 /********************************************************************************************************************************************/
-Route::get('/admin/reclamations',[\App\Http\Controllers\ReclamationController::class,"index"])->name("recadmin");
 Route::get('/reclamations',[\App\Http\Controllers\ReclamationController::class,"mesreclamations"])->name("mesreclamations");
 Route::get('/reclamations/create',[\App\Http\Controllers\ReclamationController::class,"create"])->name("reclamation.create");
 Route::post('/reclamationajouter',[\App\Http\Controllers\ReclamationController::class,"store"])->name("reclamation.store");
@@ -85,7 +85,14 @@ Route::post('/admincourscreate',[\App\Http\Controllers\MatiereContoller::class,"
 Route::put('/admincoursedit/{cours}',[\App\Http\Controllers\MatiereContoller::class,"updatecours"])->name("matieres.cours.update.admin");
 Route::delete('/admincoursdelete/{cours}/{matiere_bac_id}',[\App\Http\Controllers\MatiereContoller::class,"destroy"])->name("matieres.cours.delete.admin");
 
-Route::get('/coursm/{matiere_bac_id}',[\App\Http\Controllers\BacController::class,"showmatieres"])->name("matieresmin");
+Route::get('/admin/eleves',[\App\Http\Controllers\StudentController::class,"index"])->name("students");
+Route::post('/admin/eleves/bloque',[\App\Http\Controllers\StudentController::class,"bloquer"])->name("students.bloque");
+Route::post('/admin/eleves/debloque',[\App\Http\Controllers\StudentController::class,"debloquer"])->name("students.debloque");
+
+
+Route::get('/admin/reclamations',[\App\Http\Controllers\ReclamationController::class,"index"])->name("recadmin");
+Route::get('/admin/reclamations/detail/{reclamation}',[\App\Http\Controllers\ReclamationController::class,"detailAdmin"])->name("recadmin.detail");
+Route::post('/adminreclamationsreponse',[\App\Http\Controllers\ReclamationController::class,"reponse"])->name("reclamation.reponse.admin");
 
 
 Route::post('/photo/edit',[\App\Http\Controllers\HomeController::class,"photoedit"])->name("user.photo");

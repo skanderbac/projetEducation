@@ -16,7 +16,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h1>Education en ligne </h1>
                                 <h3>Réviser en ligne avec Edukatek </h3>
-                                <a href="#feature" class="section-btn btn btn-default smoothScroll">Découvrir plus</a>
+                                <a href="/login" class="section-btn btn btn-default smoothScroll">Découvrir plus</a>
                             </div>
                         </div>
                     </div>
@@ -28,7 +28,7 @@
                             <div class="col-md-6 col-sm-12">
                                 <h1>Commencez votre journée avec nos cours</h1>
                                 <h3>Nos cours en ligne sont construits en partenariat avec des enseignants compétants qu'ils sont conçus pour répondre à vos questions.</h3>
-                                <a href="#courses" class="section-btn btn btn-default smoothScroll">Commencer maintenant</a>
+                                <a href="/login" class="section-btn btn btn-default smoothScroll">Commencer maintenant</a>
                             </div>
                         </div>
                     </div>
@@ -517,6 +517,11 @@
     @if(session()->has("success"))
         <div class="alert alert-success">
             {{session()->get("success")}}
+        </div>
+    @endif
+    @if(session()->has("alert"))
+        <div class="alert alert-danger">
+            {{session()->get("alert")}}
         </div>
     @endif
     @if(Auth::user()->role =="Eleve" )

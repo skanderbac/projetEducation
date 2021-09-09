@@ -54,7 +54,7 @@
             </aside>
             <main>
                 <header>
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">
+                    <img src="" id="photo" style="width: 50px;height: 50px" alt="">
 
                         <h2 id="name"></h2>
                         <h3></h3>
@@ -154,8 +154,9 @@
                     }
                 });
             }
-            function setChatBox(user1_id,user2_id,nom) {
+            function setChatBox(user1_id,user2_id,nom,path) {
                 $("#name").html(nom);
+                $('#photo').attr("src",path);
                 $.ajax({
                     type: "POST",
                     url: "chat/getChatBox",
@@ -186,10 +187,12 @@
                     },
                     success: function (data) {
                         $('#result').empty();
+                        console.log(data);
                         $.each(data, function (i, item) {
                             if (item.id.toString() !== id){
-                                var rows = '<li><a href="javascript:void(0)" onclick="setChatBox('+item.user1_id+','+item.user2_id+',\''+item.name+'\');">'+
-                                    '<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt="">'+
+                                var path= "{{asset('photos')}}"+"/"+item.photo;
+                                var rows = '<li><a href="javascript:void(0)" onclick="setChatBox('+item.user1_id+','+item.user2_id+',\''+item.name+'\',\''+path+'\');">'+
+                                    '<img src="'+path+'" style="width: 50px;height: 50px">'+
                                     '<div>'+
                                     '<h2 style="color: green">'+item.name+'</h2>'+
                                     '<h3>'+

@@ -18,6 +18,7 @@ class CreateStudentsTable extends Migration
             $table->foreignId('bac_id')->constrained('bacs');
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('matiere_id')->constrained('matieres');
+            $table->integer('blocked')->default(0);
             $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

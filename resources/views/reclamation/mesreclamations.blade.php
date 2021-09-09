@@ -33,12 +33,16 @@
                             <td>traité</td>
                         @endif
                         <td>{{$r->created_at}}</td>
-                        <td><a href="/reclamations/update/{{$r->id}}" class="btn btn-info">Modifier</a></td>
-                        <td><a href="javascript:void(0)" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cette réclamation ?')){document.getElementById('form-rec{{$r->id}}').submit()}">Supprimer</a></td>
-                        <form id="form-rec{{$r->id}}" method="post" action="/reclamationsupprimer">
-                            @csrf
-                            <input type="hidden" name="reclamation_id" value="{{$r->id}}">
-                        </form>
+                        @if($r->etat==0)
+                            <td><a href="/reclamations/update/{{$r->id}}" class="btn btn-info">Modifier</a></td>
+                            <td><a href="javascript:void(0)" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cette réclamation ?')){document.getElementById('form-rec{{$r->id}}').submit()}">Supprimer</a></td>
+                            <form id="form-rec{{$r->id}}" method="post" action="/reclamationsupprimer">
+                                @csrf
+                                <input type="hidden" name="reclamation_id" value="{{$r->id}}">
+                            </form>
+                        @else
+                            <td><a href="/reclamations/detail/{{$r->id}}" class="btn btn-info">Voir détailles</a></td>
+                        @endif
                     </tr>
                 @endforeach
                 </tbody>

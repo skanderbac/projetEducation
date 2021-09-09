@@ -99,16 +99,12 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <div class="row">
+                                                            <form class="form" method="post" action="/chat" >
+                                                                @csrf
+                                                                <input value="{{$s->teacher->user->id}}" type="hidden" name="user_id">
+                                                                <input value="Discuter avec Mr/Mme {{$s->teacher->user->name}}" type="submit" class="btn btn-info">
+                                                            </form>
 
-                                                            @foreach($s->pieces as $p )
-                                                                <div class="col-sm-3">
-                                                                    <iframe src="{{asset('files/'.$p->url)}}" style="width: 200px;height: 300px;"></iframe>
-                                                                    <br>
-                                                                    <a href="{{asset('files/'.$p->url)}}" target="_blank">
-                                                                        Télécharger
-                                                                    </a>
-                                                                </div>
-                                                            @endforeach
                                                         </div>
                                                     </div>
 

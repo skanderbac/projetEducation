@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\DB;
 
 class SupportController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function store(Request $request)
     {
         $request->validate([
@@ -61,12 +65,18 @@ class SupportController extends Controller
 
 
     public function supports(){
-        $bac=Bac::all();
-        $matiere=Matiere::join('teachers','teachers.matiere_id','=','matieres.id')
-            ->join('users','users.id','=','teachers.user_id')
-            ->where('users.id','=',auth()->user()->id)
-            ->get();
-        return view('cours.support',compact('bac','matiere'));
+        if(auth()->user()->role=='Enseignant'){
+            $bac=Bac::all();
+            $matiere=Matiere::join('teachers','teachers.matiere_id','=','matieres.id')
+                ->join('users','users.id','=','teachers.user_id')
+                ->where('users.id','=',auth()->user()->id)
+                ->get();
+            return view('cours.support',compact('bac','matiere'));
+        }
+        else{
+            return redirect('/')->with("alert","vous n'avez pas la permission pour cette page");
+        }
+
     }
 
     public function messupports($bac_id){

@@ -29,11 +29,10 @@
                 <td>{{$teacher->user->email}}</td>
                 @if($teacher->confirmed==0)
                     <td>N'est pas confirmé(e)</td>
-                    <td>
-                        <form method="post" action="{{route('teachers.confirm.admin')}}">
+                    <td><a href="javascript:void(0)" class="btn btn-danger" onclick="if(confirm('Voulez vous confirmer cet enseignant ?')){document.getElementById('form-c{{$teacher->id}}').submit()}">Confirmer</a>
+                        <form id="form-c{{$teacher->id}}" method="post" action="{{route('teachers.confirm.admin')}}">
                             @csrf
                             <input type="hidden" value="{{$teacher->id}}" name="teacher_id">
-                            <button type="submit" class="btn btn-info">Confirmer</button>
                         </form>
                     </td>
                 @else

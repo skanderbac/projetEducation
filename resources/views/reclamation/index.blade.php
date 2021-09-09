@@ -14,6 +14,7 @@
     <table class="table">
         <tr>
             <th>#</th>
+            <th>Utiliateur</th>
             <th>Type</th>
             <th>Description</th>
             <th>Etat</th>
@@ -23,6 +24,7 @@
         @foreach($reclamations as $r)
             <tr>
                 <td>{{$loop->index+1}}</td>
+                <td>{{$r->user->name}} ({{$r->user->role}})</td>
                 <td>{{$r->type}}</td>
                 <td>{{$r->description}}</td>
                 @if($r->etat==0)

@@ -7,10 +7,22 @@ use Illuminate\Http\Request;
 
 class ReclamationController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $reclamations=Reclamation::with('user')->get();
-        return view('reclamation.index',compact('reclamations'));
+        if(auth()->user()->role=='Admin'){
+            $reclamations=Reclamation::with('user')->get();
+            return view('reclamation.index',compact('reclamations'));
+        }
+        else{
+            return redirect('/')->with("alert","vous n'avez pas la permission pour cette page");
+        }
+
     }
 
     public function mesreclamations()
@@ -80,7 +92,26 @@ class ReclamationController extends Controller
     public function detailAdmin($reclamation){
         $reclamation=Reclamation::find($reclamation);
 
-        return view('reclamation.update',compact('reclamation'));
+        return view('reclamation.detailadmin',compact('reclamation'));
+    }
+
+    public function reponse(Request $request){
+        $request->validate([
+            'reponse'=>'required',
+            'reclamation_id'=>'required'
+        ]);
+        $reclamation=Reclamation::find($request->get('reclamation_id'));
+        $reclamation->update([
+           'reponse'=>$request->get('reponse'),
+            'etat'=>1
+        ]);
+        return redirect('/admin/reclamations/detail/'.$request->get('reclamation_id'))->with('success',"votre réponse a été envoyée!");
+    }
+
+    public function detail($reclamation){
+        $reclamation=Reclamation::find($reclamation);
+
+        return view('reclamation.detail',compact('reclamation'));
     }
 
 }

@@ -16,11 +16,17 @@ class ChatController extends Controller
 
     public function index()
     {
-        $msg = Chat::join('chatboxes', 'chatboxes.id', '=', 'chats.chatbox_id')
-            ->join('users', 'users.id', '=', 'chats.user_id')
-            ->where('chats.chatbox_id',1)
-            ->get();
-        return view('chat.index',compact('msg'));
+        if(auth()->user()->role!='Admin'){
+            $msg = Chat::join('chatboxes', 'chatboxes.id', '=', 'chats.chatbox_id')
+                ->join('users', 'users.id', '=', 'chats.user_id')
+                ->where('chats.chatbox_id',1)
+                ->get();
+            return view('chat.index',compact('msg'));
+        }
+        else{
+            return redirect('/admin/bacs');
+        }
+
     }
 
     public function getMessage($chatbox_id)
@@ -55,5 +61,27 @@ class ChatController extends Controller
             ->where('chatboxes.user2_id',$request->get('user1_id'))
             ->get();
         return $msg;
+    }
+
+    public function createchatbox(Request $request){
+        $chatbox=Chatbox::where('chatboxes.user1_id','=',auth()->user()->id)
+            ->where('chatboxes.user2_id',$request->get('user_id'))
+            ->orwhere('chatboxes.user1_id',$request->get('user_id'))
+            ->where('chatboxes.user2_id',auth()->user()->id)
+            ->get();
+
+        $test=0;
+        foreach ($chatbox as $c) {
+            $test++;
+        }
+
+        if($test==0){
+            Chatbox::create([
+                'user1_id'=>auth()->user()->id,
+                'user2_id'=>$request->get('user_id')
+            ]);
+        }
+
+        return redirect('/chat');
     }
 }

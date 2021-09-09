@@ -18,7 +18,7 @@
             <th>Nom</th>
             <th>Bac</th>
             <th>Email</th>
-            <th>Mot de passe</th>
+            <th>Bac</th>
         </tr>
         <tbody>
         @foreach($students as $student)
@@ -27,18 +27,23 @@
                 <td>{{$student->user->name}}</td>
                 <td>{{$student->bac->nom}}</td>
                 <td>{{$student->user->email}}</td>
-                <td>*****</td>
-                <td><a href="{{route('students.edit',['student'=>$student->id])}}" class="btn btn-info">Modifier</a></td>
-                <td><a href="#" class="btn btn-dark" onclick="if(confirm('Voulez vous supprimer cet etudiant ?')){document.getElementById('form-{{$student->id}}').submit()}">Supprimer</a></td>
-                    <form id="form-{{$student->id}}" method="post" action="{{route('students.delete',['student'=>$student->id])}}">
+                <td>{{$student->bac->nom}}</td>
+                @if($student->blocked==0)
+                <td><a href="javascript:void(0)" class="btn btn-danger" onclick="if(confirm('Voulez vous bloquer cet élève ?')){document.getElementById('form-{{$student->id}}').submit()}">Bloquer</a></td>
+                    <form id="form-{{$student->id}}" method="post" action="{{route('students.bloque')}}">
                         @csrf
-                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden" name="student_id" value="{{$student->id}}">
                     </form>
-
+                @else
+                    <td><a href="javascript:void(0)" class="btn btn-info" onclick="if(confirm('Voulez vous débloquer cet élève ?')){document.getElementById('form-{{$student->id}}').submit()}">Débloquer</a></td>
+                    <form id="form-{{$student->id}}" method="post" action="{{route('students.debloque')}}">
+                        @csrf
+                        <input type="hidden" name="student_id" value="{{$student->id}}">
+                    </form>
+                @endif
             </tr>
             @endforeach
         </tbody>
         {{$students->links()}}
     </table>
-    <a href="{{route('students.create')}}">Ajouter un nouveau étudiant</a>
 @endsection
