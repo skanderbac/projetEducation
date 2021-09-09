@@ -13,7 +13,7 @@ class CreateSupportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('supports', function (Blueprint $table) {
+        Schema::create('Supports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('cours_id')->constrained('Cours');
             $table->foreignId('teacher_id')->constrained('Teachers');
@@ -28,6 +28,6 @@ class CreateSupportsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supports');
+        Schema::dropIfExists('Supports');
     }
 }
