@@ -13,7 +13,7 @@ class CreateChatboxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Chatboxes', function (Blueprint $table) {
+        Schema::create('chatboxes', function (Blueprint $table) {
             $table->id();
             $table->integer('user1_id');
             $table->integer('user2_id');
@@ -28,6 +28,6 @@ class CreateChatboxesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Chatboxs');
+        Schema::dropIfExists('chatboxs');
     }
 }

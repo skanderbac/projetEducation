@@ -13,10 +13,10 @@ class CreatePiecesTable extends Migration
      */
     public function up()
     {
-        Schema::create('Pieces', function (Blueprint $table) {
+        Schema::create('pieces', function (Blueprint $table) {
             $table->id();
             $table->string('url');
-            $table->foreignId('support_id')->constrained('Supports');
+            $table->foreignId('support_id')->constrained('supports');
             $table->timestamps();
         });
     }

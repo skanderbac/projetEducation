@@ -13,7 +13,7 @@ class CreateBacsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Bacs', function (Blueprint $table) {
+        Schema::create('bacs', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->timestamps();

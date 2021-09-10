@@ -13,10 +13,10 @@ class CreateSupportsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Supports', function (Blueprint $table) {
+        Schema::create('supports', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cours_id')->constrained('Cours');
-            $table->foreignId('teacher_id')->constrained('Teachers');
+            $table->foreignId('cours_id')->constrained('cours');
+            $table->foreignId('teacher_id')->constrained('teachers');
             $table->timestamps();
         });
     }

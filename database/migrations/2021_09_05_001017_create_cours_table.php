@@ -13,10 +13,10 @@ class CreateCoursTable extends Migration
      */
     public function up()
     {
-        Schema::create('Cours', function (Blueprint $table) {
+        Schema::create('cours', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
-            $table->foreignId('matiere_bac_id')->constrained('Matiere_bac');
+            $table->foreignId('matiere_bac_id')->constrained('matiere_bac');
             $table->timestamps();
         });
     }

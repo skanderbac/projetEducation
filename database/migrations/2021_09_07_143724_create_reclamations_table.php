@@ -13,7 +13,7 @@ class CreateReclamationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Reclamations', function (Blueprint $table) {
+        Schema::create('reclamations', function (Blueprint $table) {
             $table->id();
             $table->string('type');
             $table->string('description');

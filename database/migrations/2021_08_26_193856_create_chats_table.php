@@ -13,10 +13,10 @@ class CreateChatsTable extends Migration
      */
     public function up()
     {
-        Schema::create('Chats', function (Blueprint $table) {
+        Schema::create('chats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('chatbox_id')->constrained('Chatboxes');
+            $table->foreignId('chatbox_id')->constrained('chatboxes');
             $table->string('message');
             $table->timestamps();
         });

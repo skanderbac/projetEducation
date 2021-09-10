@@ -13,7 +13,7 @@ class CreateMatieresTable extends Migration
      */
     public function up()
     {
-        Schema::create('Matieres', function (Blueprint $table) {
+        Schema::create('matieres', function (Blueprint $table) {
             $table->id();
             $table->string('nom');
             $table->string('type');
@@ -28,6 +28,6 @@ class CreateMatieresTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('Matieres');
+        Schema::dropIfExists('matieres');
     }
 }

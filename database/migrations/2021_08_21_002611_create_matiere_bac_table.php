@@ -13,10 +13,10 @@ class CreateMatiereBacTable extends Migration
      */
     public function up()
     {
-        Schema::create('Matiere_bac', function (Blueprint $table) {
+        Schema::create('matiere_bac', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('matiere_id')->constrained('Matieres');
-            $table->foreignId('bac_id')->constrained('Bacs');
+            $table->foreignId('matiere_id')->constrained('matieres');
+            $table->foreignId('bac_id')->constrained('bacs');
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ class CreateStudentsTable extends Migration
     {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('bac_id')->constrained('Bacs');
+            $table->foreignId('bac_id')->constrained('bacs');
             $table->foreignId('user_id')->constrained('users');
-            $table->foreignId('matiere_id')->constrained('Matieres');
+            $table->foreignId('matiere_id')->constrained('matieres');
             $table->integer('blocked')->default(0);
             $table->timestamps();
         });
