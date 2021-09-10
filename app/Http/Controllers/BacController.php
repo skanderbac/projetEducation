@@ -30,8 +30,8 @@ class BacController extends Controller
 
     public function bac($id){
         if(auth()->user()->role=='Admin'){
-            $matieres=Matiere::join('Matiere_bac','Matiere_bac.matiere_id','=','Matieres.id')
-                ->where('Matiere_bac.bac_id','=',$id)
+            $matieres=Matiere::join('matiere_bac','matiere_bac.matiere_id','=','matieres.id')
+                ->where('matiere_bac.bac_id','=',$id)
                 ->get();
             $bac=Bac::where('id','=',$id)->get();
             return view('bac.matieres',compact('matieres','bac','id'));
@@ -44,8 +44,8 @@ class BacController extends Controller
     public function create($bac_id){
         if(auth()->user()->role=='Admin'){
             $matieres=Matiere::where('type','=','')->get();
-            $liste=Matiere::join('Matiere_bac','Matiere_bac.matiere_id','=','Matieres.id')
-                ->where('Matiere_bac.bac_id','=',$bac_id)
+            $liste=Matiere::join('matiere_bac','matiere_bac.matiere_id','=','matieres.id')
+                ->where('matiere_bac.bac_id','=',$bac_id)
                 ->get();
             $l=[];
             foreach ($matieres as $m){
@@ -91,10 +91,10 @@ class BacController extends Controller
         /*$cours= DB::table('cours')->join('matiere_bac','matiere_bac.id','=','cours.matiere_bac_id')
             ->where('matiere_bac.id','=',$matiere_bac_id)
             ->get();*/
-        $cours= DB::table('Cours')
-            ->select('Cours.id','Cours.titre')
-            ->join('Matiere_bac','Matiere_bac.id','=','Cours.matiere_bac_id')
-            ->where('Matiere_bac.id','=',$matiere_bac_id)
+        $cours= DB::table('cours')
+            ->select('cours.id','cours.titre')
+            ->join('matiere_bac','matiere_bac.id','=','cours.matiere_bac_id')
+            ->where('matiere_bac.id','=',$matiere_bac_id)
             ->get();
         return $cours;
     }
@@ -120,10 +120,10 @@ class BacController extends Controller
             $co->delete();
         }
 
-        $matieres= DB::table('Matieres')
-            ->select('Matieres.id','Matieres.nom')
-            ->join('Matiere_bac','Matiere_bac.matiere_id','=','Matieres.id')
-            ->where('Matiere_bac.id','=',$matiere_bac_id)
+        $matieres= DB::table('matieres')
+            ->select('matieres.id','matieres.nom')
+            ->join('matiere_bac','matiere_bac.matiere_id','=','matieres.id')
+            ->where('matiere_bac.id','=',$matiere_bac_id)
             ->get();
         $nom='';
         foreach ($matieres as $row){
