@@ -9,7 +9,7 @@ class Matiere extends Model
 {
     use HasFactory;
     public function Bacs(){
-        return $this->belongsToMany(Bac::class, 'Matiere_bac','matiere_id','bac_id')
+        return $this->belongsToMany(Bac::class, 'matiere_bac','matiere_id','bac_id')
             ->withTimestamps();
     }
 }
