@@ -14,7 +14,7 @@ class MatiereTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("Matieres")->insert([
+        DB::table("matieres")->insert([
             ["nom"=>"Mathématiques","type"=>""],
             ["nom"=>"Informatique","type"=>""],
             ["nom"=>"Disc. techniques","type"=>""],

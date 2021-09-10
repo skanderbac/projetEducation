@@ -14,7 +14,7 @@ class BacTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table("Bacs")->insert([
+        DB::table("bacs")->insert([
             ["nom"=>"Mathématiques"],
             ["nom"=>"Sciences Expérimentales"],
             ["nom"=>"Economie et gestion"],
