@@ -101,10 +101,10 @@ class BacController extends Controller
 
     public function destroy($matiere_bac_id,$bac_id)
     {
-        $cours= DB::table('Cours')
-            ->select('Cours.id')
-            ->join('Matiere_bac','Matiere_bac.id','=','Cours.matiere_bac_id')
-            ->where('Matiere_bac.id','=',$matiere_bac_id)
+        $cours= DB::table('cours')
+            ->select('cours.id')
+            ->join('matiere_bac','matiere_bac.id','=','cours.matiere_bac_id')
+            ->where('matiere_bac.id','=',$matiere_bac_id)
             ->get();
 
         foreach ($cours as $c){
