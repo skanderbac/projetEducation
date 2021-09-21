@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Support extends Model
 {
     use HasFactory;
-    protected $fillable = ["cours_id","teacher_id"];
+    protected $fillable = ["note","cours_id","teacher_id"];
     public function Cour(){
         return $this->belongsTo(Cour::class,'cours_id','id');
     }
@@ -18,5 +18,10 @@ class Support extends Model
     public function Pieces()
     {
         return $this->hasMany(Piece::class, 'support_id','id');
+    }
+
+    public function Avis()
+    {
+        return $this->hasMany(Avi::class, 'support_id','id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Avi;
 use App\Models\Bac;
 use App\Models\Cour;
 use App\Models\Matiere;
@@ -117,6 +118,12 @@ class SupportController extends Controller
         foreach ($pieces as $p){
             $p->delete();
         }
+
+        $avis=Avi::where('support_id','=',$request->get('support_id'))->get();
+        foreach ($avis as $a){
+            $a->delete();
+        }
+
         $support=Support::where('id','=',$request->get('support_id'))->first();
         $support->delete();
 

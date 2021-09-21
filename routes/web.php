@@ -99,6 +99,8 @@ Route::post('/photo/edit',[\App\Http\Controllers\HomeController::class,"photoedi
 Route::get('/profile/edit',[\App\Http\Controllers\HomeController::class,"edit"])->name("user.profile.edit");
 Route::post('/profile/update',[\App\Http\Controllers\HomeController::class,"update"])->name("user.profile.update");
 
+Route::post('/avis',[\App\Http\Controllers\AvisController::class,"store"])->name("avis");
+
 
 Auth::routes();
 

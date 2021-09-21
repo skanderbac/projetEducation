@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Avi;
 use App\Models\Bac;
 use App\Models\Cour;
 use App\Models\Matiere;
@@ -31,7 +32,14 @@ class CoursController extends Controller
         }
         $matiere =Matiere::join('matiere_bac','matiere_bac.matiere_id','=','matieres.id')
             ->where('matiere_bac.id','=',$matiere_id)->get();
-        return view('cours.index',compact('cours','matiere'));
+
+        $avis=Avi::where('user_id','=',auth()->user()->id)->get();
+        $test=0;
+        foreach ($avis as $a) {
+            $test++;
+        }
+
+        return view('cours.index',compact('cours','matiere','test'));
         //return $cours;
     }
     public function create()

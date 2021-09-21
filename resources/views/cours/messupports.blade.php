@@ -29,7 +29,7 @@
                                             <div class="position-relative p-3 bg-green" style="height: 180px">
                                                 <div class="ribbon-wrapper">
                                                     <div class="ribbon bg-primary">
-                                                        4.3/5
+                                                        {{$s->note}}/5
                                                     </div>
                                                 </div>
                                                 {{$s->teacher->user->name}}<br>
