@@ -15,6 +15,7 @@ class AvisController extends Controller
         $request->validate([
             "star"=>"required",
         ]);
+
         Avi::create([
             'note'=>$request->get('star'),
             'support_id'=>$request->get('support_id'),
